@@ -1,17 +1,20 @@
 {
   "folders": [
-	{
-		"path": "product"
-	},
-	{
-		"path": "docker"
-	},
-	{
-		"path": "checkout"
-	},
-	{
-		"path": "catalog"
-	}
-],
+    {
+      "path": "product"
+    },
+    {
+      "path": "docker"
+    },
+    {
+      "path": "checkout"
+    },
+    {
+      "path": "catalog"
+    },
+    {
+      "path": "order"
+    }
+  ],
   "settings": {}
 }

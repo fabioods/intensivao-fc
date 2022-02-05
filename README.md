@@ -35,7 +35,7 @@ export RABBITMQ_ERLANG_COOKIE="SWQOKODSQALRPCLNMEQG"
 export RABBITMQ_DEFAULT_USER="rabbitmq"
 export RABBITMQ_DEFAULT_PASS="rabbitmq"
 export RABBITMQ_DEFAULT_VHOST="/"
-export PRODUCT_URL="http://localhost:8080"
+export PRODUCT_URL="http://localhost:8081"
 ```
 
 ## Microserviço catalog
@@ -43,7 +43,21 @@ export PRODUCT_URL="http://localhost:8080"
 Executar no terminal
 
 ```bash
-export PRODUCT_URL="http://localhost:8080"
+export PRODUCT_URL="http://localhost:8081"
+```
+
+## Microserviço de Order
+
+Executar no terminal
+
+```bash
+export RABBITMQ_ERLANG_COOKIE="SWQOKODSQALRPCLNMEQG"
+export RABBITMQ_DEFAULT_USER="rabbitmq"
+export RABBITMQ_DEFAULT_PASS="rabbitmq"
+export RABBITMQ_DEFAULT_VHOST="/"
+export PRODUCT_URL="http://localhost:8081"
+export RABBITMQ_CONSUMER_QUEUE="checkout_queue"
+export REDIS_HOST="localhost:6379"
 ```
 
 ## Show your support
