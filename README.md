@@ -18,9 +18,17 @@
 
 ## Configuration
 
+## Subir RabbitMQ & Reddis
+
+Dentro da pasta docker executar:
+
+```bash
+docker-compose up -d
+```
+
 ## Microserviço checkout
 
-Executar no terminal
+Executar no terminal:
 
 ```bash
 export RABBITMQ_ERLANG_COOKIE="SWQOKODSQALRPCLNMEQG"
