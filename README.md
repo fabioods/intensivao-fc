@@ -12,13 +12,36 @@
 
 👤 **Fábio dos Santos**
 
-* Twitter: [@fabioods](https://twitter.com/fabioods)
-* Github: [@fabioods](https://github.com/fabioods)
-* LinkedIn: [@fabioods](https://linkedin.com/in/fabioods)
+- Twitter: [@fabioods](https://twitter.com/fabioods)
+- Github: [@fabioods](https://github.com/fabioods)
+- LinkedIn: [@fabioods](https://linkedin.com/in/fabioods)
+
+## Configuration
+
+## Microserviço checkout
+
+Executar no terminal
+
+```bash
+export RABBITMQ_ERLANG_COOKIE="SWQOKODSQALRPCLNMEQG"
+export RABBITMQ_DEFAULT_USER="rabbitmq"
+export RABBITMQ_DEFAULT_PASS="rabbitmq"
+export RABBITMQ_DEFAULT_VHOST="/"
+export PRODUCT_URL="http://localhost:8080"
+```
+
+## Microserviço catalog
+
+Executar no terminal
+
+```bash
+export PRODUCT_URL="http://localhost:8080"
+```
 
 ## Show your support
 
 Give a ⭐️ if this project helped you!
 
-***
+---
+
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_

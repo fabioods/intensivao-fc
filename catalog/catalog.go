@@ -63,5 +63,5 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", ListProducts)
 	r.HandleFunc("/product/{id}", ShowProducts)
-	http.ListenAndServe(":8082", r)
+	http.ListenAndServe(":8080", r)
 }
