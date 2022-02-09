@@ -3,15 +3,14 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"flag"
 	"fmt"
-	"io/ioutil"
-	"net/http"
 	"order/db"
 	"order/queue"
-	"os"
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/streadway/amqp"
 )
 
 type Product struct {
@@ -30,30 +29,41 @@ type Order struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
-var productsURL string
-
-func init() {
-	productsURL = os.Getenv("PRODUCT_URL")
-}
-
 func main() {
+	var param string
+	flag.StringVar(&param, "opt", "", "")
+	flag.Parse()
+
 	in := make(chan []byte)
 	connection := queue.Connect()
-	queue.StartConsuming(connection, in)
 
-	for payload := range in {
-		CreateOrder(payload)
-		fmt.Println("Recibiendo payload: ", string(payload))
+	switch param {
+	case "checkout":
+		queue.StartConsuming("checkout_queue", connection, in)
+		for payload := range in {
+			notifyOrderCreated(CreateOrder(payload), connection)
+			fmt.Println("Recibiendo payload checkout: ", string(payload))
+		}
+	case "payment":
+		queue.StartConsuming("payment_queue", connection, in)
+		var order Order
+		for payload := range in {
+			json.Unmarshal(payload, &order)
+			saveOrder(order)
+			fmt.Println("Recibiendo payload payment: ", string(payload))
+		}
 	}
+
 }
 
-func CreateOrder(payload []byte) {
+func CreateOrder(payload []byte) Order {
 	var order Order
 	json.Unmarshal(payload, &order)
 	order.UUID = uuid.New().String()
 	order.Status = "pending"
 	order.CreatedAt = time.Now()
 	saveOrder(order)
+	return order
 }
 
 func saveOrder(order Order) {
@@ -65,13 +75,8 @@ func saveOrder(order Order) {
 	}
 }
 
-func getProductByID(productID string) Product {
-	response, err := http.Get(productsURL + "/product/" + productID)
-	if err != nil {
-		fmt.Println("Error de http", err.Error())
-	}
-	data, _ := ioutil.ReadAll(response.Body)
-	var product Product
-	json.Unmarshal(data, &product)
-	return product
+func notifyOrderCreated(order Order, ch *amqp.Channel) {
+	json, _ := json.Marshal(order)
+	queue.Notify(json, "order_ex", "", ch)
+
 }
